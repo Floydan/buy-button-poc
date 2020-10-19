@@ -1,0 +1,16 @@
+{
+    "id": "P-1234",
+    "name": "Test product",
+    "description": "Lorem ipsum dolor sit amet.",
+    "currentPrice": 125,
+    "originalPrice": 199,
+    "images": [],
+    "variants": [{
+        "id": "V-1234",
+        "name": "Test variant",
+        "description": "Test variant description",
+        "images": ["image1"],
+        "currentPrice": 125,
+        "originalPrice": 199
+    }]
+}
