@@ -26,18 +26,18 @@ class Toggle {
 
     set(amount) {
         this.itemCount = amount;
-        this.element.querySelector('.toggle-count').innerText = this.itemCount
+        this.#updateToggleCount();
     }
 
     add(amount) {
         this.itemCount += amount;
-        this.element.querySelector('.toggle-count').innerText = this.itemCount
+        this.#updateToggleCount();
     }
 
     remove(amount) {
         this.itemCount -= amount;
         if (this.itemCount < 0) this.itemCount = 0;
-        this.element.querySelector('.toggle-count').innerText = this.itemCount > 0 ? this.itemCount : ''
+        this.#updateToggleCount();
     }
 
     show() {
@@ -61,6 +61,10 @@ class Toggle {
             this.visible = !this.visible;
             this.element.classList.toggle('-active');
         }, 25);
+    }
+
+    #updateToggleCount() {
+        this.element.querySelector('.toggle-count').innerText = this.itemCount > 0 ? this.itemCount : ''
     }
 }
 

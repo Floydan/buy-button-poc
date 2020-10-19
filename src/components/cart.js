@@ -33,7 +33,10 @@ class Cart {
         this.toggle = new Toggle(0);
         this.visible = false;
 
-        items = [...items];
+        this.#setCartItems([...items]);
+    }
+
+    #setCartItems(items) {
         const cache = this.getCache();
         if (cache && items) {
             for (const item of cache) {

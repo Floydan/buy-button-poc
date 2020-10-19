@@ -37,15 +37,7 @@ class CartItem {
         }));
 
         this.element = element;
-
-        if (!hasImage) {
-            this.element.querySelector('.bbuy-cart-item-image', this.element).innerText = '?';
-        }
-        else {
-            const img = document.createElement('img');
-            img.src = this.product.image[0];
-            this.element.querySelector('.bbuy-cart-item-image', this.element).appendChild(img);
-        }
+        this.#setCartItemImage();
 
         container.appendChild(this.element);
 
@@ -58,20 +50,22 @@ class CartItem {
 
     add(amount) {
         this.quantity += amount;
-        this.element.querySelector('.bbuy-cart-item-quantity').innerText = this.quantity;
-        this.element.querySelector('.bbuy-cart-item-price').innerText = new Number(this.quantity * this.product.currentPrice).toLocaleString('en-US');
+        this.#updateQuantityAndPrice();
 
         document.dispatchEvent(new CustomEvent('bbuy:item:quantity:change'));
     }
 
     subtract(amount) {
         this.quantity -= amount;
-        this.element.querySelector('.bbuy-cart-item-quantity').innerText = this.quantity;
-        this.element.querySelector('.bbuy-cart-item-price').innerText = new Number(this.quantity * this.product.currentPrice).toLocaleString('en-US');
+
+        if (this.quantity <= 0) {
+            this.remove();
+            return;
+        }
+
+        this.#updateQuantityAndPrice();
 
         document.dispatchEvent(new CustomEvent('bbuy:item:quantity:change'));
-        if (this.quantity <= 0)
-            this.remove();
     }
 
     remove() {
@@ -87,17 +81,26 @@ class CartItem {
         if (!product || !product.id) return;
 
         this.product = product;
+        this.#setCartItemImage();
+        this.#updateQuantityAndPrice();
+        document.dispatchEvent(new CustomEvent('bbuy:item:quantity:change'));
+    }
+
+    #setCartItemImage() {
         const hasImage = this.product.images && this.product.images.length !== 0;
         if (!hasImage) {
             this.element.querySelector('.bbuy-cart-item-image').innerText = '?';
         }
         else {
             const img = document.createElement('img');
-            img.src = this.product.image[0];
+            img.src = this.product.images[0];
             this.element.querySelector('.bbuy-cart-item-image').appendChild(img);
         }
-        this.element.querySelector('.bbuy-cart-item-price').innerText = new Number(this.quantity * this.product.currentPrice).toLocaleString('en-US');
-        document.dispatchEvent(new CustomEvent('bbuy:item:quantity:change'));
+    }
+
+    #updateQuantityAndPrice() {
+        this.element.querySelector('.bbuy-cart-item-quantity').innerText = this.quantity;
+        this.element.querySelector('.bbuy-cart-item-price').innerText = new Number(this.quantity * this.product.currentPrice).toLocaleString('en-US')
     }
 }
 
