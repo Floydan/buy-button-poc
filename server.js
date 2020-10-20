@@ -27,35 +27,5 @@ app.get('/:type/:id', (req, res) => {
     });
 });
 
-// app.get('/inventory/:productid', (req, res) => {
-//     var fileName = `json/inventory/${req.params.productid}.json`;
-//     var file = path.normalize(__dirname + '/' + fileName);
-//     console.log('path: ' + file);
-
-//     jsonfile.readFile(file, function (err, obj) {
-//         if (err) {
-//             res.json({ status: 'error', reason: err.toString() });
-//             return;
-//         }
-
-//         res.json(obj);
-//     });
-// });
-
-// app.get('/products/:productid', (req, res) => {
-//     var fileName = `json/products/${req.params.productid}.json`;
-//     var file = path.normalize(__dirname + '/' + fileName);
-//     console.log('path: ' + file);
-
-//     jsonfile.readFile(file, function (err, obj) {
-//         if (err) {
-//             res.json({ status: 'error', reason: err.toString() });
-//             return;
-//         }
-
-//         res.json(obj);
-//     });
-// });
-
 console.log(`Listening on ${port}`);
 app.listen(port);
