@@ -11,8 +11,9 @@ app.use(express.static(__dirname + '/dist'))
     .use(cors())
 
 
-app.get('/inventory/:productid', (req, res) => {
-    var fileName = `json/inventory/${req.params.productid}.json`;
+app.get('/:type/:id', (req, res) => {
+    const type = req.params.type;
+    var fileName = `json/${type}/${req.params.id}.json`;
     var file = path.normalize(__dirname + '/' + fileName);
     console.log('path: ' + file);
 
@@ -26,20 +27,35 @@ app.get('/inventory/:productid', (req, res) => {
     });
 });
 
-app.get('/products/:productid', (req, res) => {
-    var fileName = `json/products/${req.params.productid}.json`;
-    var file = path.normalize(__dirname + '/' + fileName);
-    console.log('path: ' + file);
+// app.get('/inventory/:productid', (req, res) => {
+//     var fileName = `json/inventory/${req.params.productid}.json`;
+//     var file = path.normalize(__dirname + '/' + fileName);
+//     console.log('path: ' + file);
 
-    jsonfile.readFile(file, function (err, obj) {
-        if (err) {
-            res.json({ status: 'error', reason: err.toString() });
-            return;
-        }
+//     jsonfile.readFile(file, function (err, obj) {
+//         if (err) {
+//             res.json({ status: 'error', reason: err.toString() });
+//             return;
+//         }
 
-        res.json(obj);
-    });
-});
+//         res.json(obj);
+//     });
+// });
+
+// app.get('/products/:productid', (req, res) => {
+//     var fileName = `json/products/${req.params.productid}.json`;
+//     var file = path.normalize(__dirname + '/' + fileName);
+//     console.log('path: ' + file);
+
+//     jsonfile.readFile(file, function (err, obj) {
+//         if (err) {
+//             res.json({ status: 'error', reason: err.toString() });
+//             return;
+//         }
+
+//         res.json(obj);
+//     });
+// });
 
 console.log(`Listening on ${port}`);
 app.listen(port);

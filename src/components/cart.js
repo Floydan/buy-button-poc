@@ -37,19 +37,20 @@ class Cart {
     }
 
     #setCartItems(items) {
-        const cache = this.getCache();
-        if (cache && items) {
-            for (const item of cache) {
-                if (item == null) continue;
-                items.push(item);
-            }
-        }
-
-        if (items) {
+        if (items && items.length !== 0) {
             for (const item of items) {
                 if (item == null) continue;
 
                 this.items.push(new CartItem({ product: item.product, quantity: item.quantity }));
+            }
+        }
+        else {
+            const cache = this.getCache();
+            if (cache && items) {
+                for (const item of cache) {
+                    if (item == null) continue;
+                    items.push(item);
+                }
             }
         }
     }

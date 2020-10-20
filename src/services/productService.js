@@ -53,6 +53,17 @@ class ProductService {
         });
     }
 
+    async getCart(id) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const cart = await this.#sendRequest('GET', `/carts/${id}`);
+                resolve(cart);
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
+
     async #sendRequest(method, url, data, callback) {
         return new Promise((resolve, reject) => {
             var req = new XMLHttpRequest();

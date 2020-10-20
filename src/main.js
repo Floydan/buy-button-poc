@@ -1,11 +1,11 @@
 import '../src/sass/main.scss';
 import './string.format.js';
+import './localStorage.polyfill';
 import 'core-js/features/promise';
 import 'core-js/features/string/split';
 
 import AffiliationService from './services/affiliationService';
 import ProductService from './services/productService';
-
 import Cart from './components/cart';
 import BuyButton from './components/buyButton';
 
@@ -16,6 +16,7 @@ import BuyButton from './components/buyButton';
 
     let affilateId = '';
     let cart = null;
+    let productService = null;
 
     const getFileParams = () => {
         const stack = new Error().stack;
@@ -62,11 +63,10 @@ import BuyButton from './components/buyButton';
 
             const affiliationData = AffiliationService.setData(affilateId, params?.get('v'));
 
-            createCart();
-
             setTimeout(async () => {
 
-                const productService = new ProductService(affiliationData.affiliateId);
+                productService = new ProductService(affiliationData.affiliateId);
+                await createCart();
 
                 const buyButtonPlaceHolders = document.getElementsByTagName('buy-button');
                 for (let buyButtonTemplate of buyButtonPlaceHolders) {
@@ -85,11 +85,17 @@ import BuyButton from './components/buyButton';
         }
     }
 
-    function createCart() {
+    async function createCart() {
         const body = document.getElementsByTagName('body')[0];
         const html = document.getElementsByTagName('html')[0];
 
-        cart = new Cart([]).render(body);
+        const cartId = localStorage.getItem('bbuy:cart-id');
+        let items = [];
+        if (cartId && cartId.length !== 0) {
+            items = (await getCart(cartId)).items || [];
+        }
+
+        cart = new Cart(items).render(body);
 
         html.addEventListener('click', (e) => {
             if (cart.visible)
@@ -113,8 +119,9 @@ import BuyButton from './components/buyButton';
         }
     }
 
-    function getCart() {
-
+    async function getCart(id) {
+        const response = await productService.getCart(id);
+        return response;
     }
 
     init();

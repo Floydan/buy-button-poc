@@ -1,0 +1,24 @@
+{
+    "items": [{
+            "product": {
+                "id": "P-1234",
+                "name": "Test product",
+                "description": "Lorem ipsum dolor sit amet.",
+                "currentPrice": 125,
+                "originalPrice": 199,
+                "images": []
+            },
+            "quantity": 1
+        },
+        {
+            "product": {
+                "id": "P-4321",
+                "name": "Product test 2",
+                "currentPrice": 15.8,
+                "originalPrice": 15.8
+            },
+            "quantity": 3
+        }
+    ],
+    "created": "2020-10-20T11:00:00Z"
+}
