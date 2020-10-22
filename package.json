@@ -1,7 +1,7 @@
 {
   "name": "buy-button",
   "version": "1.0.0",
-  "description": "",
+  "description": "buy button poc",
   "main": "server.js",
   "scripts": {
     "test": "echo \"no test specified\"",
@@ -10,7 +10,11 @@
     "dev": "concurrently \"npx webpack --watch\" \"npx nodemon\"",
     "webpack": "node_modules/.bin/webpack"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Floydan/buy-button-poc.git"
+  },
+  "author": "Joakim Höglund",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
