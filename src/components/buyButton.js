@@ -2,11 +2,11 @@ import '../string.format.js';
 import DomElementServices from '../services/domElementService'
 
 const BUY_BUTTON_TEMPLATE = `
-        <div style="display:inline-block">
+        <div class="bbtn-container">
             <button class="bbtn bb-cta {inheritedClasses}" pid={productId}>
                 {innerHtml}
             </button>
-            <div style="text-align: center">
+            <div class="stock-status">
                 <b>In stock: {inventoryStock}</b>
             </div>
         </div>`;

@@ -5,20 +5,28 @@ buy-button {
     display: none;
 }
 
-button.bbtn {
-    padding: 0.5rem 2rem;
-    cursor: pointer;
-    border-radius: 0.5rem;
-    margin-top: 0.5rem;
+.bbtn-container {
+    display: inline-block;
 
-    &.bb-cta {
-        background-color: $color;
-        color: #fff;
-        border: 1px solid $color;
+    div.stock-status {
+        text-align: center;
+    }
 
-        &:hover {
-            border-color: $colorDark;
-            background-color: $colorDark;
+    button.bbtn {
+        padding: 0.5rem 2rem;
+        cursor: pointer;
+        border-radius: 0.5rem;
+        margin-top: 0.5rem;
+
+        &.bb-cta {
+            background-color: $color;
+            color: #fff;
+            border: 1px solid $color;
+
+            &:hover {
+                border-color: $colorDark;
+                background-color: $colorDark;
+            }
         }
     }
 }

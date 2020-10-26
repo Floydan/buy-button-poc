@@ -54,7 +54,7 @@ import BuyButton from './components/buyButton';
 
     async function init() {
         try {
-            await loadStyle('/assets/css/main.css'); //replace with public absolute path url
+            await loadStyle('/assets/css/buybtn.min.css'); //replace with public absolute path url
 
             const params = getFileParams();
             affilateId = params?.get('aid');

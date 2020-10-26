@@ -8,8 +8,8 @@ module.exports = (env, argsv) => {
     return {
         entry: ['./src/main.js'],
         output: {
-            filename: `assets/js/${isDevelopment ? '[name].js' : '[name].js'}`,
-            chunkFilename: `assets/js/${isDevelopment ? '[id].js' : '[id].js'}`,
+            filename: `assets/js/${isDevelopment ? 'buybtn.js' : 'buybtn.min.js'}`,
+            chunkFilename: `assets/js/${isDevelopment ? '[id].js' : '[id].min.js'}`,
             path: path.resolve(__dirname, 'dist'),
         },
         mode: argsv.mode !== 'production' ? 'development' : 'production',
@@ -127,7 +127,7 @@ module.exports = (env, argsv) => {
                 template: './src/index.html'
             }),
             new MiniCssExtractPlugin({
-                filename: `assets/css/${isDevelopment ? '[name].css' : '[name].css'}`,
+                filename: `assets/css/${isDevelopment ? 'buybtn.css' : 'buybtn.min.css'}`,
                 chunkFilename: `assets/css/${isDevelopment ? '[id].css' : '[id].css'}`,
             }),
         ],
