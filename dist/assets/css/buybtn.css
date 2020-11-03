@@ -1,18 +1,27 @@
+:root {
+  --color1: $color;
+  --colorDark: $colorDark; }
+
 buy-button {
   display: none; }
 
-button.bbtn {
-  padding: 0.5rem 2rem;
-  cursor: pointer;
-  border-radius: 0.5rem;
-  margin-top: 0.5rem; }
-  button.bbtn.bb-cta {
+.bbtn-container {
+  display: inline-block; }
+  .bbtn-container div.stock-status {
+    text-align: center; }
+  .bbtn-container .bbtn {
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
     background-color: #0b918a;
     color: #fff;
     border: 1px solid #0b918a; }
-    button.bbtn.bb-cta:hover {
-      border-color: #097973;
-      background-color: #097973; }
+    .bbtn-container .bbtn:disabled {
+      filter: grayscale(100%);
+      cursor: auto; }
+    .bbtn-container .bbtn:focus:not([disabled]), .bbtn-container .bbtn:hover:not([disabled]) {
+      filter: brightness(140%) saturate(120%); }
 
 .bbuy-toggle {
   display: none;
@@ -32,8 +41,13 @@ button.bbtn {
   min-width: 25px;
   margin-right: 0;
   cursor: pointer;
-  -webkit-transition: background 200ms ease;
-  transition: background 200ms ease; }
+  transition: background 200ms ease;
+  -webkit-transition: background 200ms ease; }
+  .bbuy-toggle:disabled {
+    filter: grayscale(100%);
+    cursor: auto; }
+  .bbuy-toggle:focus:not([disabled]), .bbuy-toggle:hover:not([disabled]) {
+    filter: brightness(140%) saturate(120%); }
   .bbuy-toggle.-active {
     display: flex;
     flex-direction: column;
@@ -60,7 +74,8 @@ button.bbtn {
   z-index: 2147483647;
   transform: translateX(100%);
   -webkit-transform: translateX(100%);
-  background: #fff; }
+  background: #fff;
+  color: #111; }
   .bbuy-cart > div.bbuy-cart-inner {
     border-left: 1px solid #0b918a;
     padding: 1rem;
@@ -174,7 +189,13 @@ button.bbtn {
           padding: 0.5rem 2rem;
           border-radius: 5rem;
           border: none;
-          margin-top: 1rem; }
+          margin-top: 1rem;
+          cursor: pointer; }
+          .bbuy-cart > div.bbuy-cart-inner .bbuy-items-button-container .bbuy-cart-actions .bbuy-purchase-button:disabled {
+            filter: grayscale(100%);
+            cursor: auto; }
+          .bbuy-cart > div.bbuy-cart-inner .bbuy-items-button-container .bbuy-cart-actions .bbuy-purchase-button:focus:not([disabled]), .bbuy-cart > div.bbuy-cart-inner .bbuy-items-button-container .bbuy-cart-actions .bbuy-purchase-button:hover:not([disabled]) {
+            filter: brightness(140%) saturate(120%); }
   .bbuy-cart.-initialized {
     -webkit-transition: all 250ms cubic-bezier(0.165, 0.84, 0.44, 1);
     transition: all 250ms cubic-bezier(0.165, 0.84, 0.44, 1); }

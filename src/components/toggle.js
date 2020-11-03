@@ -4,7 +4,7 @@ const CART_TOGGLE_TEMPLATE = `
             <div id="bbuy-toggle" class="bbuy-toggle">
                 <div class="toggle-count"></div>
                 <div class="toggle-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-cart" data-element="toggle.icon" viewBox="0 0 25 25" enable-background="new 0 0 25 25"><g class="shopify-buy__icon-cart__group"><path d="M24.6 3.6c-.3-.4-.8-.6-1.3-.6h-18.4l-.1-.5c-.3-1.5-1.7-1.5-2.5-1.5h-1.3c-.6 0-1 .4-1 1s.4 1 1 1h1.8l3 13.6c.2 1.2 1.3 2.4 2.5 2.4h12.7c.6 0 1-.4 1-1s-.4-1-1-1h-12.7c-.2 0-.5-.4-.6-.8l-.2-1.2h12.6c1.3 0 2.3-1.4 2.5-2.4l2.4-7.4v-.2c.1-.5-.1-1-.4-1.4zm-4 8.5v.2c-.1.3-.4.8-.5.8h-13l-1.8-8.1h17.6l-2.3 7.1z"></path><circle cx="9" cy="22" r="2"></circle><circle cx="19" cy="22" r="2"></circle></g></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill='#FFFFFF'><path d="M21.96 14.27l2-7c.09-.3.03-.63-.16-.88-.19-.24-.49-.39-.8-.39H5V4c0-.55-.45-1-1-1H1c-.55 0-1 .45-1 1s.45 1 1 1h2v2c0 .01.01.02.01.04 0 .1.02.21.05.3l2.55 7L6.57 17H4c-.55 0-1 .45-1 1s.45 1 1 1h17c.55 0 1-.45 1-1s-.45-1-1-1H8.7l-.73-2H21c.45 0 .84-.3.96-.73zM21.1 10H18V8h3.67l-.57 2zM13 11v2h-3v-2h3zm-3-1V8h3v2h-3zm4 1h3v2h-3v-2zm0-1V8h3v2h-3zM9 8v2H6.15l-.72-2H9zm-2.29 3.52L6.52 11H9v2H7.25l-.54-1.48zM18 13v-2h2.82l-.57 2H18z"></path><circle cx="5" cy="21" r="2"></circle><circle cx="20" cy="21" r="2"></circle></g></svg>
                 </div>
             </div>`;
 

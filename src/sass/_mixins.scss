@@ -28,6 +28,18 @@
     color: yiq-contrast-color($background, $dark, $light, $threshold);
 }
 
+@mixin button-filter() {
+    &:disabled {
+        filter: grayscale(100%);
+        cursor: auto;
+    }
+
+    &:focus:not([disabled]),
+    &:hover:not([disabled]) {
+        filter: brightness(140%) saturate(120%);
+    }
+}
+
 @mixin xs() {
 
     @media only screen and (min-width: #{$widthXSmall}em),

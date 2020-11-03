@@ -1,6 +1,11 @@
 @import "variables";
 @import "mixins";
 
+:root {
+    --color1: $color;
+    --colorDark: $colorDark;
+}
+
 buy-button {
     display: none;
 }
@@ -12,22 +17,16 @@ buy-button {
         text-align: center;
     }
 
-    button.bbtn {
+    .bbtn {
         padding: 0.5rem 2rem;
         cursor: pointer;
         border-radius: 0.5rem;
         margin-top: 0.5rem;
+        background-color: $color;
+        color: #fff;
+        border: 1px solid $color;
 
-        &.bb-cta {
-            background-color: $color;
-            color: #fff;
-            border: 1px solid $color;
-
-            &:hover {
-                border-color: $colorDark;
-                background-color: $colorDark;
-            }
-        }
+        @include button-filter();
     }
 }
 
@@ -48,8 +47,10 @@ buy-button {
     min-width: 25px;
     margin-right: 0;
     cursor: pointer;
-    -webkit-transition: background 200ms ease;
     transition: background 200ms ease;
+    -webkit-transition: background 200ms ease;
+
+    @include button-filter();
 
     &.-active {
         display: flex;
@@ -85,7 +86,7 @@ buy-button {
     z-index: 2147483647;
     transform: translateX(100%);
     -webkit-transform: translateX(100%);
-    background: #fff;
+    @include yiq-contrasted(#fff);
 
     >div.bbuy-cart-inner {
         border-left: 1px solid $color;
@@ -239,6 +240,9 @@ buy-button {
                     border-radius: 5rem;
                     border: none;
                     margin-top: 1rem;
+                    cursor: pointer;
+
+                    @include button-filter();
                 }
             }
         }
