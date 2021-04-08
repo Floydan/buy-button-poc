@@ -13,7 +13,8 @@ const CART_ITEM_TEMPLATE = `
                             <span class="bbuy-cart-item-add">&plus;</span>
                         </div>
                         <div>
-                            <span class="bbuy-cart-item-price">{currentPrice}</span>
+                            <div class="bbuy-price bbuy-cart-item-original-price">{currentPrice}</div>
+                            <div class="bbuy-price bbuy-cart-item-price">{currentPrice}</div>
                         </div>
                     </div>
                 </div>
@@ -33,10 +34,19 @@ class CartItem {
             name: this.product.name,
             image: hasImage ? this.product.images[0] : '',
             currentPrice: new Number(this.product.currentPrice).toLocaleString('en-US'),
+            originalPrice: new Number(this.product.originalPrice).toLocaleString('en-US'),
             quantity: this.quantity
         }));
 
         this.element = element;
+
+        if (this.product.currentPrice < this.product.originalPrice) {
+            this.element.querySelector('.bbuy-cart-item-price').classList.add('discount');
+        }
+        else {
+            this.element.querySelector('.bbuy-cart-item-original-price').classList.add('bb-hidden');
+        }
+
         this.#setCartItemImage();
 
         container.appendChild(this.element);

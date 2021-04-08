@@ -13,7 +13,7 @@ module.exports = (env, argsv) => {
             path: path.resolve(__dirname, 'dist'),
         },
         mode: argsv.mode !== 'production' ? 'development' : 'production',
-        devtool: argsv.mode !== 'production' ? 'source-map' : '',
+        devtool: argsv.mode !== 'production' ? 'source-map' : false,
         module: {
             rules: [
                 {

@@ -5,6 +5,9 @@
 buy-button {
   display: none; }
 
+.bb-hidden {
+  display: none; }
+
 .bbtn-container {
   display: inline-block; }
   .bbtn-container div.stock-status {
@@ -141,10 +144,15 @@ buy-button {
               display: flex;
               justify-content: space-between;
               align-items: flex-end; }
-              .bbuy-cart > div.bbuy-cart-inner .bbuy-items-button-container > .bbuy-cart-items > .bbuy-cart-item .bbuy-cart-item-content .bbuy-cart-item-price-quantity-container .bbuy-cart-item-price {
+              .bbuy-cart > div.bbuy-cart-inner .bbuy-items-button-container > .bbuy-cart-items > .bbuy-cart-item .bbuy-cart-item-content .bbuy-cart-item-price-quantity-container .bbuy-price {
                 font-weight: bold; }
-                .bbuy-cart > div.bbuy-cart-inner .bbuy-items-button-container > .bbuy-cart-items > .bbuy-cart-item .bbuy-cart-item-content .bbuy-cart-item-price-quantity-container .bbuy-cart-item-price:before {
+                .bbuy-cart > div.bbuy-cart-inner .bbuy-items-button-container > .bbuy-cart-items > .bbuy-cart-item .bbuy-cart-item-content .bbuy-cart-item-price-quantity-container .bbuy-price:before {
                   content: '$'; }
+                .bbuy-cart > div.bbuy-cart-inner .bbuy-items-button-container > .bbuy-cart-items > .bbuy-cart-item .bbuy-cart-item-content .bbuy-cart-item-price-quantity-container .bbuy-price.discount {
+                  color: #7c0000; }
+              .bbuy-cart > div.bbuy-cart-inner .bbuy-items-button-container > .bbuy-cart-items > .bbuy-cart-item .bbuy-cart-item-content .bbuy-cart-item-price-quantity-container .bbuy-cart-item-original-price {
+                font-weight: lighter;
+                text-decoration: line-through; }
               .bbuy-cart > div.bbuy-cart-inner .bbuy-items-button-container > .bbuy-cart-items > .bbuy-cart-item .bbuy-cart-item-content .bbuy-cart-item-price-quantity-container .bbuy-cart-item-subtract,
               .bbuy-cart > div.bbuy-cart-inner .bbuy-items-button-container > .bbuy-cart-items > .bbuy-cart-item .bbuy-cart-item-content .bbuy-cart-item-price-quantity-container .bbuy-cart-item-add {
                 font-size: 1.1em;

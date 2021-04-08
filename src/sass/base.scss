@@ -10,6 +10,10 @@ buy-button {
     display: none;
 }
 
+.bb-hidden {
+    display: none;
+}
+
 .bbtn-container {
     display: inline-block;
 
@@ -169,12 +173,21 @@ buy-button {
                             justify-content: space-between;
                             align-items: flex-end;
 
-                            .bbuy-cart-item-price {
+                            .bbuy-price {
                                 font-weight: bold;
 
                                 &:before {
                                     content: '$';
                                 }
+
+                                &.discount {
+                                    color: rgb(124, 0, 0);
+                                }
+                            }
+
+                            .bbuy-cart-item-original-price {
+                                font-weight: lighter;
+                                text-decoration: line-through;
                             }
 
                             .bbuy-cart-item-subtract,
