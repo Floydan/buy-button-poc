@@ -94,9 +94,10 @@ buy-button {
         background: #ccc;
         border-radius: 20px;
         height: 20px;
-        line-height: 20px;
         width: 20px;
-        text-align: center; }
+        display: flex;
+        align-items: center;
+        justify-content: center; }
         .bbuy-cart > div.bbuy-cart-inner > div.bbuy-cart-title > #bbuy-cart-close:hover {
           -webkit-transform: scale(1.2);
           transform: scale(1.2); }

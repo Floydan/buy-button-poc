@@ -110,6 +110,7 @@ class CartItem {
 
     #updateQuantityAndPrice() {
         this.element.querySelector('.bbuy-cart-item-quantity').innerText = this.quantity;
+        this.element.querySelector('.bbuy-cart-item-original-price').innerText = new Number(this.quantity * this.product.originalPrice).toLocaleString('en-US')
         this.element.querySelector('.bbuy-cart-item-price').innerText = new Number(this.quantity * this.product.currentPrice).toLocaleString('en-US')
     }
 }

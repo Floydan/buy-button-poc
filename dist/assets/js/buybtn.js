@@ -650,6 +650,7 @@ function _setCartItemImage2() {
 
 function _updateQuantityAndPrice2() {
   this.element.querySelector('.bbuy-cart-item-quantity').innerText = this.quantity;
+  this.element.querySelector('.bbuy-cart-item-original-price').innerText = new Number(this.quantity * this.product.originalPrice).toLocaleString('en-US');
   this.element.querySelector('.bbuy-cart-item-price').innerText = new Number(this.quantity * this.product.currentPrice).toLocaleString('en-US');
 }
 
@@ -6943,7 +6944,7 @@ function _arrayWithHoles(arr) {
               affilateId = params === null || params === void 0 ? void 0 : params.get('aid');
               console.log('Affiliate id:', affilateId);
               console.log('Version:', (params === null || params === void 0 ? void 0 : params.get('v')) || 'version missing');
-              affiliationData = _services_affiliationService__WEBPACK_IMPORTED_MODULE_16__.default.setData(affilateId, params === null || params === void 0 ? void 0 : params.get('v'), '/products/{productid}', '/inventory/{productid}', '/carts/{cartid}');
+              affiliationData = _services_affiliationService__WEBPACK_IMPORTED_MODULE_16__.default.setData(affilateId, params === null || params === void 0 ? void 0 : params.get('v'));
               setTimeout( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
                 var buyButtonPlaceHolders, _iterator, _step, buyButtonTemplate, _iterator2, _step2, cartItem, product;
 
