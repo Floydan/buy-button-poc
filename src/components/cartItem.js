@@ -7,7 +7,7 @@ const CART_ITEM_TEMPLATE = `
                 <div class="bbuy-cart-item-content">
                     <div class="bbuy-cart-item-name">{name}</div>
                     <div class="bbuy-cart-item-price-quantity-container">
-                        <div>
+                        <div class="bbuy-cart-item-actions-container">
                             <span class="bbuy-cart-item-subtract">&minus;</span> 
                             <b class="bbuy-cart-item-quantity">{quantity}</b> 
                             <span class="bbuy-cart-item-add">&plus;</span>
@@ -27,6 +27,24 @@ class CartItem {
         this.quantity = quantity;
     }
 
+    #eventHandlers = {
+        add: (e) => {
+            this.add(1);
+            e.preventDefault();
+            e.stopPropagation();
+        },
+        subtract: (e) => {
+            this.subtract(1);
+            e.preventDefault();
+            e.stopPropagation();
+        },
+        remove: (e) => {
+            this.remove();
+            e.preventDefault();
+            e.stopPropagation();
+        },
+    }
+
     render(container) {
         const hasImage = this.product.images && this.product.images.length !== 0;
         const element = DomElementServices.createElementFromHTML(CART_ITEM_TEMPLATE.format({
@@ -40,9 +58,6 @@ class CartItem {
 
         this.element = element;
 
-        console.log('currentPrice', this.product.currentPrice);
-        console.log('originalPrice', this.product.originalPrice);
-
         if (this.product.currentPrice < this.product.originalPrice) {
             this.element.querySelector('.bbuy-cart-item-price').classList.add('discount');
         }
@@ -54,9 +69,9 @@ class CartItem {
 
         container.appendChild(this.element);
 
-        this.element.querySelector('.bbuy-cart-item-add').addEventListener('click', () => { this.add(1); });
-        this.element.querySelector('.bbuy-cart-item-subtract').addEventListener('click', () => { this.subtract(1); });
-        this.element.querySelector('.bbuy-cart-item-remove').addEventListener('click', () => this.remove());
+        this.element.querySelector('.bbuy-cart-item-add').addEventListener('click', this.#eventHandlers.add);
+        this.element.querySelector('.bbuy-cart-item-subtract').addEventListener('click', this.#eventHandlers.subtract);
+        this.element.querySelector('.bbuy-cart-item-remove').addEventListener('click', this.#eventHandlers.remove);
 
         return this;
     }
@@ -82,9 +97,9 @@ class CartItem {
     }
 
     remove() {
-        this.element.querySelector('.bbuy-cart-item-add').removeEventListener('click', () => { this.add(1); });
-        this.element.querySelector('.bbuy-cart-item-subtract').removeEventListener('click', () => { this.subtract(1); });
-        this.element.querySelector('.bbuy-cart-item-remove').removeEventListener('click', null);
+        this.element.querySelector('.bbuy-cart-item-add').removeEventListener('click', this.#eventHandlers.add);
+        this.element.querySelector('.bbuy-cart-item-subtract').removeEventListener('click', this.#eventHandlers.subtract);
+        this.element.querySelector('.bbuy-cart-item-remove').removeEventListener('click', this.#eventHandlers.remove);
         this.element.remove();
 
         document.dispatchEvent(new CustomEvent('bbuy:item:removed', { detail: { id: this.product.id } }));

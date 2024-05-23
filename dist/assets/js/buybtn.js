@@ -271,9 +271,9 @@ var Cart = /*#__PURE__*/function () {
     _classCallCheck(this, Cart);
     _classPrivateMethodInitSpec(this, _Cart_brand);
     this.items = [];
-    this.toggle = new _toggle__WEBPACK_IMPORTED_MODULE_4__["default"](0);
     this.visible = false;
     _assertClassBrand(_Cart_brand, this, _setCartItems).call(this, _toConsumableArray(_items));
+    this.toggle = new _toggle__WEBPACK_IMPORTED_MODULE_4__["default"](this.itemTotalCount());
   }
   return _createClass(Cart, [{
     key: "render",
@@ -282,6 +282,9 @@ var Cart = /*#__PURE__*/function () {
       var element = _services_domElementService__WEBPACK_IMPORTED_MODULE_2__["default"].createElementFromHTML(CART_TEMPLATE);
       this.element = element;
       container.appendChild(this.element);
+      this.element.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
       console.log(_services_affiliationService__WEBPACK_IMPORTED_MODULE_1__["default"].getData());
       if (!this.element.classList.contains('-initialized')) this.element.classList.add('-initialized');
       if (this.items.length !== 0) {
@@ -336,10 +339,9 @@ var Cart = /*#__PURE__*/function () {
   }, {
     key: "itemTotalCount",
     value: function itemTotalCount() {
-      var totalQuantity = 0;
-      this.items.forEach(function (item) {
-        totalQuantity += item.quantity;
-      });
+      var totalQuantity = this.items.reduce(function (acc, item) {
+        return acc + item.quantity;
+      }, 0);
       return totalQuantity;
     }
   }, {
@@ -349,7 +351,7 @@ var Cart = /*#__PURE__*/function () {
       document.getElementById('bbuy-cart-subtotal').innerText = new Number(totalAmount).toLocaleString('en');
       var totalQuantity = this.itemTotalCount();
       this.toggle.set(totalQuantity);
-      if (totalQuantity === 0) this.toggle.hide();
+      if (totalQuantity === 0) this.hide();
       this.setCache();
     }
   }, {
@@ -373,7 +375,7 @@ var Cart = /*#__PURE__*/function () {
         }).render(cartItemsHolder));
       }
       this.updateTotal();
-      this.show();
+      if (!this.visible) this.show();
       this.setCache();
     }
   }, {
@@ -394,7 +396,7 @@ var Cart = /*#__PURE__*/function () {
       }
       if (index === -1) return;
       this.items.splice(index, 1);
-      if (this.items.length === 0) this.toggle.hide();
+      if (this.items.length === 0) this.hide();
       this.updateTotal();
       this.setCache();
     }
@@ -542,10 +544,17 @@ function _classPrivateMethodInitSpec(obj, privateSet) {
   _checkPrivateRedeclaration(obj, privateSet);
   privateSet.add(obj);
 }
+function _classPrivateFieldInitSpec(obj, privateMap, value) {
+  _checkPrivateRedeclaration(obj, privateMap);
+  privateMap.set(obj, value);
+}
 function _checkPrivateRedeclaration(obj, privateCollection) {
   if (privateCollection.has(obj)) {
     throw new TypeError("Cannot initialize the same private elements twice on an object");
   }
+}
+function _classPrivateFieldGet(s, a) {
+  return s.get(_assertClassBrand(s, a));
 }
 function _assertClassBrand(e, t, n) {
   if ("function" == typeof e ? e === t : e.has(t)) return arguments.length < 3 ? t : n;
@@ -553,21 +562,39 @@ function _assertClassBrand(e, t, n) {
 }
 
 
-var CART_ITEM_TEMPLATE = "\n            <div class=\"bbuy-cart-item\" pid=\"{id}\">\n                <div class=\"bbuy-cart-item-image\"></div>\n                <div class=\"bbuy-cart-item-content\">\n                    <div class=\"bbuy-cart-item-name\">{name}</div>\n                    <div class=\"bbuy-cart-item-price-quantity-container\">\n                        <div>\n                            <span class=\"bbuy-cart-item-subtract\">&minus;</span> \n                            <b class=\"bbuy-cart-item-quantity\">{quantity}</b> \n                            <span class=\"bbuy-cart-item-add\">&plus;</span>\n                        </div>\n                        <div>\n                            <div class=\"bbuy-price bbuy-cart-item-original-price\">{originalPrice}</div>\n                            <div class=\"bbuy-price bbuy-cart-item-price\">{currentPrice}</div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"bbuy-cart-item-remove\">&times</div>\n            </div>";
+var CART_ITEM_TEMPLATE = "\n            <div class=\"bbuy-cart-item\" pid=\"{id}\">\n                <div class=\"bbuy-cart-item-image\"></div>\n                <div class=\"bbuy-cart-item-content\">\n                    <div class=\"bbuy-cart-item-name\">{name}</div>\n                    <div class=\"bbuy-cart-item-price-quantity-container\">\n                        <div class=\"bbuy-cart-item-actions-container\">\n                            <span class=\"bbuy-cart-item-subtract\">&minus;</span> \n                            <b class=\"bbuy-cart-item-quantity\">{quantity}</b> \n                            <span class=\"bbuy-cart-item-add\">&plus;</span>\n                        </div>\n                        <div>\n                            <div class=\"bbuy-price bbuy-cart-item-original-price\">{originalPrice}</div>\n                            <div class=\"bbuy-price bbuy-cart-item-price\">{currentPrice}</div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"bbuy-cart-item-remove\">&times</div>\n            </div>";
+var _eventHandlers = /*#__PURE__*/new WeakMap();
 var _CartItem_brand = /*#__PURE__*/new WeakSet();
 var CartItem = /*#__PURE__*/function () {
   function CartItem(_ref) {
+    var _this = this;
     var product = _ref.product,
       quantity = _ref.quantity;
     _classCallCheck(this, CartItem);
     _classPrivateMethodInitSpec(this, _CartItem_brand);
+    _classPrivateFieldInitSpec(this, _eventHandlers, {
+      add: function add(e) {
+        _this.add(1);
+        e.preventDefault();
+        e.stopPropagation();
+      },
+      subtract: function subtract(e) {
+        _this.subtract(1);
+        e.preventDefault();
+        e.stopPropagation();
+      },
+      remove: function remove(e) {
+        _this.remove();
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
     this.product = product;
     this.quantity = quantity;
   }
   return _createClass(CartItem, [{
     key: "render",
     value: function render(container) {
-      var _this = this;
       var hasImage = this.product.images && this.product.images.length !== 0;
       var element = _services_domElementService__WEBPACK_IMPORTED_MODULE_1__["default"].createElementFromHTML(CART_ITEM_TEMPLATE.format({
         id: this.product.id,
@@ -578,8 +605,6 @@ var CartItem = /*#__PURE__*/function () {
         quantity: this.quantity
       }));
       this.element = element;
-      console.log('currentPrice', this.product.currentPrice);
-      console.log('originalPrice', this.product.originalPrice);
       if (this.product.currentPrice < this.product.originalPrice) {
         this.element.querySelector('.bbuy-cart-item-price').classList.add('discount');
       } else {
@@ -587,15 +612,9 @@ var CartItem = /*#__PURE__*/function () {
       }
       _assertClassBrand(_CartItem_brand, this, _setCartItemImage).call(this);
       container.appendChild(this.element);
-      this.element.querySelector('.bbuy-cart-item-add').addEventListener('click', function () {
-        _this.add(1);
-      });
-      this.element.querySelector('.bbuy-cart-item-subtract').addEventListener('click', function () {
-        _this.subtract(1);
-      });
-      this.element.querySelector('.bbuy-cart-item-remove').addEventListener('click', function () {
-        return _this.remove();
-      });
+      this.element.querySelector('.bbuy-cart-item-add').addEventListener('click', _classPrivateFieldGet(_eventHandlers, this).add);
+      this.element.querySelector('.bbuy-cart-item-subtract').addEventListener('click', _classPrivateFieldGet(_eventHandlers, this).subtract);
+      this.element.querySelector('.bbuy-cart-item-remove').addEventListener('click', _classPrivateFieldGet(_eventHandlers, this).remove);
       return this;
     }
   }, {
@@ -619,14 +638,9 @@ var CartItem = /*#__PURE__*/function () {
   }, {
     key: "remove",
     value: function remove() {
-      var _this2 = this;
-      this.element.querySelector('.bbuy-cart-item-add').removeEventListener('click', function () {
-        _this2.add(1);
-      });
-      this.element.querySelector('.bbuy-cart-item-subtract').removeEventListener('click', function () {
-        _this2.subtract(1);
-      });
-      this.element.querySelector('.bbuy-cart-item-remove').removeEventListener('click', null);
+      this.element.querySelector('.bbuy-cart-item-add').removeEventListener('click', _classPrivateFieldGet(_eventHandlers, this).add);
+      this.element.querySelector('.bbuy-cart-item-subtract').removeEventListener('click', _classPrivateFieldGet(_eventHandlers, this).subtract);
+      this.element.querySelector('.bbuy-cart-item-remove').removeEventListener('click', _classPrivateFieldGet(_eventHandlers, this).remove);
       this.element.remove();
       document.dispatchEvent(new CustomEvent('bbuy:item:removed', {
         detail: {
@@ -7816,16 +7830,16 @@ function _arrayWithHoles(arr) {
   }
   function _createCart() {
     _createCart = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-      var body, html, cartId, items;
+      var body, html, items, cartId, cartCache, timeout;
       return _regeneratorRuntime().wrap(function _callee4$(_context4) {
         while (1) switch (_context4.prev = _context4.next) {
           case 0:
             body = document.getElementsByTagName('body')[0];
             html = document.getElementsByTagName('html')[0];
-            cartId = localStorage.getItem('bbuy:cart-id');
             items = [];
+            cartId = localStorage.getItem('bbuy:cart-id');
             if (!(cartId && cartId.length !== 0)) {
-              _context4.next = 11;
+              _context4.next = 13;
               break;
             }
             _context4.next = 7;
@@ -7839,12 +7853,20 @@ function _arrayWithHoles(arr) {
             _context4.t0 = [];
           case 10:
             items = _context4.t0;
-          case 11:
-            cart = new _components_cart__WEBPACK_IMPORTED_MODULE_17__["default"](items).render(body);
-            html.addEventListener('click', function (e) {
-              if (cart.visible) e.target === cart.element || cart.element.contains(e.target) || e.target.classList.contains('bbtn') || cart.hide();
-            });
+            _context4.next = 15;
+            break;
           case 13:
+            cartCache = localStorage.getItem('bbuy-cart');
+            if (cartCache && cartCache.length !== 0) {
+              items = JSON.parse(cartCache);
+            }
+          case 15:
+            cart = new _components_cart__WEBPACK_IMPORTED_MODULE_17__["default"](items).render(body);
+            body.addEventListener('click', function () {
+              if (timeout) clearTimeout(timeout);
+              if (cart.visible) timeout = setTimeout(cart.hide, 250);
+            });
+          case 17:
           case "end":
             return _context4.stop();
         }

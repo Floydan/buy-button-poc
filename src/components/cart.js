@@ -30,10 +30,10 @@ const CART_TEMPLATE = `
 class Cart {
     constructor(items) {
         this.items = [];
-        this.toggle = new Toggle(0);
         this.visible = false;
 
         this.#setCartItems([...items]);
+        this.toggle = new Toggle(this.itemTotalCount());
     }
 
     #setCartItems(items) {
@@ -59,6 +59,8 @@ class Cart {
         const element = DomElementServices.createElementFromHTML(CART_TEMPLATE);
         this.element = element;
         container.appendChild(this.element);
+
+        this.element.addEventListener('click', (e) => { e.stopPropagation(); });
 
         console.log(AffiliationService.getData());
 
@@ -101,10 +103,10 @@ class Cart {
     }
 
     itemTotalCount() {
-        let totalQuantity = 0;
-        this.items.forEach(item => {
-            totalQuantity += item.quantity;
-        });
+        const totalQuantity = this.items.reduce((acc, item) => {
+            return acc + item.quantity;
+        }, 0);
+
         return totalQuantity;
     }
 
@@ -113,10 +115,11 @@ class Cart {
         document.getElementById('bbuy-cart-subtotal').innerText = new Number(totalAmount).toLocaleString('en');
 
         let totalQuantity = this.itemTotalCount();
+
         this.toggle.set(totalQuantity);
 
         if (totalQuantity === 0)
-            this.toggle.hide();
+            this.hide();
 
         this.setCache();
     }
@@ -137,7 +140,8 @@ class Cart {
             this.items.push(new CartItem({ product, quantity: quantity || 1 }).render(cartItemsHolder));
         }
         this.updateTotal();
-        this.show();
+        if(!this.visible)
+            this.show();
 
         this.setCache();
     }
@@ -154,8 +158,10 @@ class Cart {
         if (index === -1) return;
 
         this.items.splice(index, 1);
+        
         if (this.items.length === 0)
-            this.toggle.hide();
+            this.hide();
+
         this.updateTotal();
 
         this.setCache();

@@ -89,17 +89,25 @@ import BuyButton from './components/buyButton';
         const body = document.getElementsByTagName('body')[0];
         const html = document.getElementsByTagName('html')[0];
 
-        const cartId = localStorage.getItem('bbuy:cart-id');
         let items = [];
+        const cartId = localStorage.getItem('bbuy:cart-id');
         if (cartId && cartId.length !== 0) {
             items = (await getCart(cartId)).items || [];
+        } 
+        else {
+            const cartCache = localStorage.getItem('bbuy-cart');
+            if (cartCache && cartCache.length !== 0) {
+                items = JSON.parse(cartCache);
+            }
         }
 
         cart = new Cart(items).render(body);
 
-        html.addEventListener('click', (e) => {
+        let timeout;
+        body.addEventListener('click', () => {
+            if(timeout) clearTimeout(timeout);
             if (cart.visible)
-                e.target === cart.element || cart.element.contains(e.target) || e.target.classList.contains('bbtn') || cart.hide();
+                timeout = setTimeout(cart.hide, 250)
         });
     }
 

@@ -15,7 +15,7 @@ app.get('/:type/:id', (req, res) => {
     const type = req.params.type;
     var fileName = `json/${type}/${req.params.id}.json`;
     var file = path.normalize(__dirname + '/' + fileName);
-    console.log('path: ' + file);
+    //console.log('path: ' + file);
 
     jsonfile.readFile(file, function (err, obj) {
         if (err) {
@@ -27,5 +27,5 @@ app.get('/:type/:id', (req, res) => {
     });
 });
 
-console.log(`Listening on ${port}`);
+console.log(`Listening on http://localhost:${port}`);
 app.listen(port);
