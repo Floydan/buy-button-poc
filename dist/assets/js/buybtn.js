@@ -553,7 +553,7 @@ function _assertClassBrand(e, t, n) {
 }
 
 
-var CART_ITEM_TEMPLATE = "\n            <div class=\"bbuy-cart-item\" pid=\"{id}\">\n                <div class=\"bbuy-cart-item-image\"></div>\n                <div class=\"bbuy-cart-item-content\">\n                    <div class=\"bbuy-cart-item-name\">{name}</div>\n                    <div class=\"bbuy-cart-item-price-quantity-container\">\n                        <div>\n                            <span class=\"bbuy-cart-item-subtract\">&minus;</span> \n                            <b class=\"bbuy-cart-item-quantity\">{quantity}</b> \n                            <span class=\"bbuy-cart-item-add\">&plus;</span>\n                        </div>\n                        <div>\n                            <div class=\"bbuy-price bbuy-cart-item-original-price\">{currentPrice}</div>\n                            <div class=\"bbuy-price bbuy-cart-item-price\">{currentPrice}</div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"bbuy-cart-item-remove\">&times</div>\n            </div>";
+var CART_ITEM_TEMPLATE = "\n            <div class=\"bbuy-cart-item\" pid=\"{id}\">\n                <div class=\"bbuy-cart-item-image\"></div>\n                <div class=\"bbuy-cart-item-content\">\n                    <div class=\"bbuy-cart-item-name\">{name}</div>\n                    <div class=\"bbuy-cart-item-price-quantity-container\">\n                        <div>\n                            <span class=\"bbuy-cart-item-subtract\">&minus;</span> \n                            <b class=\"bbuy-cart-item-quantity\">{quantity}</b> \n                            <span class=\"bbuy-cart-item-add\">&plus;</span>\n                        </div>\n                        <div>\n                            <div class=\"bbuy-price bbuy-cart-item-original-price\">{originalPrice}</div>\n                            <div class=\"bbuy-price bbuy-cart-item-price\">{currentPrice}</div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"bbuy-cart-item-remove\">&times</div>\n            </div>";
 var _CartItem_brand = /*#__PURE__*/new WeakSet();
 var CartItem = /*#__PURE__*/function () {
   function CartItem(_ref) {
@@ -578,6 +578,8 @@ var CartItem = /*#__PURE__*/function () {
         quantity: this.quantity
       }));
       this.element = element;
+      console.log('currentPrice', this.product.currentPrice);
+      console.log('originalPrice', this.product.originalPrice);
       if (this.product.currentPrice < this.product.originalPrice) {
         this.element.querySelector('.bbuy-cart-item-price').classList.add('discount');
       } else {

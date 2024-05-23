@@ -13,7 +13,7 @@ const CART_ITEM_TEMPLATE = `
                             <span class="bbuy-cart-item-add">&plus;</span>
                         </div>
                         <div>
-                            <div class="bbuy-price bbuy-cart-item-original-price">{currentPrice}</div>
+                            <div class="bbuy-price bbuy-cart-item-original-price">{originalPrice}</div>
                             <div class="bbuy-price bbuy-cart-item-price">{currentPrice}</div>
                         </div>
                     </div>
@@ -39,6 +39,9 @@ class CartItem {
         }));
 
         this.element = element;
+
+        console.log('currentPrice', this.product.currentPrice);
+        console.log('originalPrice', this.product.originalPrice);
 
         if (this.product.currentPrice < this.product.originalPrice) {
             this.element.querySelector('.bbuy-cart-item-price').classList.add('discount');
